@@ -1,0 +1,3 @@
+/home/prathamesh/Desktop/College/Sem-2/CGR-MP/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/prathamesh/Desktop/College/Sem-2/CGR-MP/cmake-build-debug/CMakeFiles/CGR_MP.dir
+/home/prathamesh/Desktop/College/Sem-2/CGR-MP/cmake-build-debug/CMakeFiles/edit_cache.dir

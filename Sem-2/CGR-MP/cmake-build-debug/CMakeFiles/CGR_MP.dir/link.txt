@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/CGR_MP.dir/main.cpp.o  -o CGR_MP 
