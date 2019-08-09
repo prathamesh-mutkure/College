@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/prathamesh/Desktop/College/Sem-2/OOP-MP/main.cpp
+iostream
+-
+string.h
+-
+stdbool.h
+-
+fstream
+-
+iomanip
+-
+

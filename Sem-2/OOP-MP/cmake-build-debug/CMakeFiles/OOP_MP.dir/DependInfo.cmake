@@ -1,16 +1,15 @@
 # The set of languages for which implicit dependencies are needed:
 set(CMAKE_DEPENDS_LANGUAGES
-  "C"
+  "CXX"
   )
 # The set of files for implicit dependencies of each language:
-set(CMAKE_DEPENDS_CHECK_C
-  "/home/prathamesh/Desktop/College/Sem-2/CGR-MP/main.c" "/home/prathamesh/Desktop/College/Sem-2/CGR-MP/cmake-build-debug/CMakeFiles/CGR_MP.dir/main.c.o"
+set(CMAKE_DEPENDS_CHECK_CXX
+  "/home/prathamesh/Desktop/College/Sem-2/OOP-MP/main.cpp" "/home/prathamesh/Desktop/College/Sem-2/OOP-MP/cmake-build-debug/CMakeFiles/OOP_MP.dir/main.cpp.o"
   )
-set(CMAKE_C_COMPILER_ID "GNU")
+set(CMAKE_CXX_COMPILER_ID "GNU")
 
 # The include file search paths:
-set(CMAKE_C_TARGET_INCLUDE_PATH
-  "/usr/local/lib/libgraph-1.0.2"
+set(CMAKE_CXX_TARGET_INCLUDE_PATH
   )
 
 # Targets to which this target links.

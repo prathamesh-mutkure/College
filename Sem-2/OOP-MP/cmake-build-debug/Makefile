@@ -48,10 +48,10 @@ RM = /snap/clion/73/bin/cmake/linux/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/prathamesh/Desktop/College/Sem-2/CGR-MP
+CMAKE_SOURCE_DIR = /home/prathamesh/Desktop/College/Sem-2/OOP-MP
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/prathamesh/Desktop/College/Sem-2/CGR-MP/cmake-build-debug
+CMAKE_BINARY_DIR = /home/prathamesh/Desktop/College/Sem-2/OOP-MP/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/prathamesh/Desktop/College/Sem-2/CGR-MP/cmake-build-debug/CMakeFiles /home/prathamesh/Desktop/College/Sem-2/CGR-MP/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/prathamesh/Desktop/College/Sem-2/OOP-MP/cmake-build-debug/CMakeFiles /home/prathamesh/Desktop/College/Sem-2/OOP-MP/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/prathamesh/Desktop/College/Sem-2/CGR-MP/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/prathamesh/Desktop/College/Sem-2/OOP-MP/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -111,44 +111,44 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named CGR_MP
+# Target rules for targets named OOP_MP
 
 # Build rule for target.
-CGR_MP: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 CGR_MP
-.PHONY : CGR_MP
+OOP_MP: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 OOP_MP
+.PHONY : OOP_MP
 
 # fast build rule for target.
-CGR_MP/fast:
-	$(MAKE) -f CMakeFiles/CGR_MP.dir/build.make CMakeFiles/CGR_MP.dir/build
-.PHONY : CGR_MP/fast
+OOP_MP/fast:
+	$(MAKE) -f CMakeFiles/OOP_MP.dir/build.make CMakeFiles/OOP_MP.dir/build
+.PHONY : OOP_MP/fast
 
-main.o: main.c.o
+main.o: main.cpp.o
 
 .PHONY : main.o
 
 # target to build an object file
-main.c.o:
-	$(MAKE) -f CMakeFiles/CGR_MP.dir/build.make CMakeFiles/CGR_MP.dir/main.c.o
-.PHONY : main.c.o
+main.cpp.o:
+	$(MAKE) -f CMakeFiles/OOP_MP.dir/build.make CMakeFiles/OOP_MP.dir/main.cpp.o
+.PHONY : main.cpp.o
 
-main.i: main.c.i
+main.i: main.cpp.i
 
 .PHONY : main.i
 
 # target to preprocess a source file
-main.c.i:
-	$(MAKE) -f CMakeFiles/CGR_MP.dir/build.make CMakeFiles/CGR_MP.dir/main.c.i
-.PHONY : main.c.i
+main.cpp.i:
+	$(MAKE) -f CMakeFiles/OOP_MP.dir/build.make CMakeFiles/OOP_MP.dir/main.cpp.i
+.PHONY : main.cpp.i
 
-main.s: main.c.s
+main.s: main.cpp.s
 
 .PHONY : main.s
 
 # target to generate assembly for a file
-main.c.s:
-	$(MAKE) -f CMakeFiles/CGR_MP.dir/build.make CMakeFiles/CGR_MP.dir/main.c.s
-.PHONY : main.c.s
+main.cpp.s:
+	$(MAKE) -f CMakeFiles/OOP_MP.dir/build.make CMakeFiles/OOP_MP.dir/main.cpp.s
+.PHONY : main.cpp.s
 
 # Help Target
 help:
@@ -157,7 +157,7 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... rebuild_cache"
-	@echo "... CGR_MP"
+	@echo "... OOP_MP"
 	@echo "... edit_cache"
 	@echo "... main.o"
 	@echo "... main.i"
