@@ -3,10 +3,10 @@
  * OOP MICRO PROJECT BY:
  *
  *  1. Vinit Akhar (5)
- *  1. Prathamesh Mutkure (23)
- *  1. Samyak Sukhdeve (26)
+ *  2. Prathamesh Mutkure (23)
+ *  3. Samyak Sukhdeve (26)
  *
- * PROGRAM: Banking Program
+ * PROGRAM: Bank Management System
  *
  * TOPICS COVERED:
  *
@@ -22,7 +22,8 @@
 #include <fstream>
 #include <iomanip>
 
-#define FILE_ERROR "\nCould not open the File, Error!!"
+#define FILE_ERROR "\nCould not open the File, Error!!\n"
+#define RECORD_ERROR "\nRecord not found!!\n"
 
 using namespace std;
 
@@ -129,21 +130,24 @@ void Account::modify_acc()
         case 2:
             cout << "\nEnter Balance: ";
             cin >> balance;
+            break;
         case 3:
             cout << "\nEnter new Aadhar Number: ";
             cin >> aadhar_num;
+            break;
         case 4:
             cout << "\nEnter new PAN Number: ";
             cin >> PAN_num;
+            break;
         default:
-            cout << "Enter valid choice!" << endl;
+            cout << "Enter a valid choice!" << endl;
             modify_acc();
     }
 }
 
 void Account::display_basic_info()
 {
-    cout << acc_num << setw(10) << name << setw(10) << balance << endl;
+    cout << acc_num << setw(20) << name << setw(20) << balance << endl;
 }
 
 int main()
@@ -222,7 +226,7 @@ void withdraw_deposit_money(int choice)
     File.open("account.dat", ios::binary|ios::in|ios::out);
     if (!File)
     {
-        cout << FILE_ERROR << endl;
+        cout << FILE_ERROR;
         return;
     }
 
@@ -247,7 +251,7 @@ void withdraw_deposit_money(int choice)
     File.close();
 
     if(!found)
-        cout << "\nRecord not Found!" << endl;
+        cout << RECORD_ERROR;
 }
 
 void edit_account()
@@ -263,7 +267,7 @@ void edit_account()
     File.open("account.dat", ios::binary|ios::in|ios::out);
     if (!File)
     {
-        cout << FILE_ERROR << endl;
+        cout << FILE_ERROR;
         return;
     }
 
@@ -286,12 +290,13 @@ void edit_account()
     File.close();
 
     if (!found)
-        cout << "\nRecord not found!!" << endl;
+        cout << RECORD_ERROR;
 }
 
 void delete_account()
 {
     Account ac;
+    bool found = false;
     ifstream accFile;
     ofstream tempFile;
 
@@ -303,7 +308,7 @@ void delete_account()
 
     if (!accFile)
     {
-        cout << "\nFile could not be found!!" << endl;
+        cout << FILE_ERROR;
         return;
     }
 
@@ -311,8 +316,12 @@ void delete_account()
 
     accFile.seekg(0, ios::beg);
     while (accFile.read((char*) &ac, sizeof(Account)))
+    {
         if (ac.getAccNum() != accNo)
-            tempFile.write((char*) &ac, sizeof(Account));
+            tempFile.write((char *) &ac, sizeof(Account));
+        if (ac.getAccNum() == accNo)
+            found = true;
+    }
 
 
     accFile.close();
@@ -321,7 +330,10 @@ void delete_account()
     remove("account.dat");
     rename("temp.dat", "account.dat");
 
-    cout << "\nAccount Deleted!!" << endl;
+    if (found)
+        cout << "\nAccount Deleted!!" << endl;
+    else
+        cout << RECORD_ERROR;
 }
 
 void display_account()
@@ -338,7 +350,7 @@ void display_account()
 
     if (!File)
     {
-        cout << "Failed to Open File, Data could not be read!!" << endl;
+        cout << FILE_ERROR;
         return;
     }
 
@@ -365,7 +377,7 @@ void display_all_accounts()
     File.open("account.dat", ios::binary);
     if (!File)
     {
-        cout << "\nFile not found!!" << endl;
+        cout << FILE_ERROR;
         return;
     }
 
