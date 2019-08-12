@@ -30,12 +30,17 @@ int main()
         floodfill(201, 0, WHITE);
 
         // Track
-        for(int i=0; i<500; i+=65)
+        for(int i=0; i<400; i+=65)
         {
-            rectangle(290, 10+i, 310, 50+i);
+            rectangle(290, 10+i+t_y, 310, 50+i+t_y);
             setfillstyle(SOLID_FILL, WHITE);
-            floodfill(291, 11+i, WHITE);
+            floodfill(291, 11+i+t_y, WHITE);
         }
+
+        // Moving the track
+        t_y += 15;
+        if (t_y > 450)
+            t_y = -500;
 
         // Info
         settextstyle(BOLD_FONT, HORIZ_DIR, SMALL_FONT);
@@ -54,8 +59,8 @@ int main()
         // Points
         outtextxy(100, 40, "0");
 
-        delay(200);
-        --page;
+        page = 1-page;
+        delay(30);
     }
 
     getch();
