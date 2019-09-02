@@ -23,12 +23,14 @@ int main()
     // To track positions
     int page = 0, track_y = -300;
     int car_pos_x1 = 0, car_pos_y1;
-    int Car_x = 0, Car_y = 0, Car_speed_x = 5, Car_speed_y = 8;
+    int Car_x = 0, Car_y = 0, Car_speed_x = 5;
     int enemySlow = 0, enemyNormal = 0, enemyFast = 0;
 
-    // Flags
+    // Flags and game flow
+    int lives  = 3;
     bool flag = true;
 
+    restart:
     while (flag)
     {
         // Maintaining constant picture
@@ -71,13 +73,12 @@ int main()
         outtextxy(100, 40, pts);
 
         // Circles representing number of life:
-        setfillstyle(SOLID_FILL, WHITE);
-        circle(90, 20, 8);
-        floodfill(91, 21, WHITE);
-        circle(110, 20, 8);
-        floodfill(111, 21, WHITE);
-        circle(130, 20, 8);
-        floodfill(131, 21, WHITE);
+        for (int i=0, n = lives; i<=40 && n>0; i+=20, n--)
+        {
+            setfillstyle(SOLID_FILL, WHITE);
+            circle(90+i, 20, 8);
+            floodfill(91+i, 21, WHITE);
+        }
 
         // Spawning three Enemy cars
         enemyCar(235, -50, enemyFast, RED, GREEN);
@@ -138,15 +139,9 @@ int main()
         else if (GetAsyncKeyState(VK_RIGHT) && car_pos_x1 <= 350)
             Car_x += Car_speed_x;
 
-        // X-Pos
-        //putpixel(car_pos_x1, car_pos_y1, WHITE);
-        //putpixel(car_pos_x1 + 40, car_pos_y1, WHITE);
-        putpixel(car_pos_x1, car_pos_y1+75, WHITE);
-        putpixel(car_pos_x1 + 40, car_pos_y1+75, WHITE);
-
         // Winning Logic
         // For X-axis collision
-        for (int i=0; i<=40; i+=20)
+        for (int i=0; i<=40; i+=10)
         {
             // For Y-axis collision
             for (int j=0; j<=75; j+=25)
@@ -154,19 +149,42 @@ int main()
                 if (car_pos_x1+i > e1_x && car_pos_x1+i < e1_x+20 && car_pos_y1+j < e1_y && car_pos_y1+j > e1_y-40)
                 {
                     strcpy(pts, "loose");
-                    delay(500);
+                    --lives;
+                    delay(250);
                 }
                 else if (car_pos_x1+i > e2_x && car_pos_x1+i < e2_x+20 && car_pos_y1+j < e2_y && car_pos_y1+j > e2_y-40)
                 {
                     strcpy(pts, "loose");
-                    delay(500);
+                    --lives;
+                    delay(250);
                 }
                 else if (car_pos_x1+i > e3_x && car_pos_x1+i < e3_x+20 && car_pos_y1+j < e3_y && car_pos_y1+j > e3_y-40)
                 {
                     strcpy(pts, "loose");
-                    delay(500);
+                    --lives;
+                    delay(250);
                 }
             }
+        }
+
+        // Game Over
+        if (lives <= 0)
+        {
+            setcolor(BLUE);
+            setfillstyle(SOLID_FILL, BLUE);
+            rectangle(100, 100, 550, 400);
+            floodfill(101, 101, BLUE);
+
+            // Game Over Prompt
+            setcolor(WHITE);
+            outtextxy(110, 120, "GAME OVER! PRESS ANY KEY TO CONTINUE");
+
+            char msg[100];
+            sprintf(msg, "YOUR SCORE WAS %ld", score);
+            outtextxy(110, 160, msg);
+
+            getch();
+            delay(3000);
         }
 
         score += 5;
