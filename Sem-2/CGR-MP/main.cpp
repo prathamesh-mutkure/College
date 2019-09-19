@@ -3,11 +3,14 @@
 #include <stdio.h>
 #include <strings.h>
 #include <stdbool.h>
+#include <windows.h>
 
 #define MAX_Y 480
 #define MAX_X 640
 
 void enemyCar(int x, int y, int moveFactor, colors body, colors head);
+void reposition(int *es, int *en, int *ef, int *c_x, int *s_val);
+void restart(int* lives, long* score, int* score_val);
 
 using namespace std;
 
@@ -16,9 +19,13 @@ int main()
     int gd = DETECT, gm;
     initgraph(&gd, &gm, " ");
 
+    // Background Music
+    PlaySound("car_music.wav", NULL, SND_FILENAME|SND_LOOP|SND_ASYNC);
+
     // To track Points
     char pts[100] = "0";
     long score = 0;
+    int score_val = 5;
 
     // To track positions
     int page = 0, track_y = -300;
@@ -150,19 +157,22 @@ int main()
                 {
                     strcpy(pts, "loose");
                     --lives;
-                    delay(250);
+                    reposition(&enemySlow, &enemyNormal, &enemyFast, &Car_x, &score_val);
+                    //delay(250);
                 }
                 else if (car_pos_x1+i > e2_x && car_pos_x1+i < e2_x+20 && car_pos_y1+j < e2_y && car_pos_y1+j > e2_y-40)
                 {
                     strcpy(pts, "loose");
                     --lives;
-                    delay(250);
+                    reposition(&enemySlow, &enemyNormal, &enemyFast, &Car_x, &score_val);
+                    //delay(250);
                 }
                 else if (car_pos_x1+i > e3_x && car_pos_x1+i < e3_x+20 && car_pos_y1+j < e3_y && car_pos_y1+j > e3_y-40)
                 {
                     strcpy(pts, "loose");
                     --lives;
-                    delay(250);
+                    reposition(&enemySlow, &enemyNormal, &enemyFast, &Car_x, &score_val);
+                    //delay(250);
                 }
             }
         }
@@ -170,24 +180,35 @@ int main()
         // Game Over
         if (lives <= 0)
         {
+            score_val = 0;
             setcolor(BLUE);
             setfillstyle(SOLID_FILL, BLUE);
-            rectangle(100, 100, 550, 400);
+            rectangle(90, 100, 560, 400);
             floodfill(101, 101, BLUE);
 
             // Game Over Prompt
             setcolor(WHITE);
-            outtextxy(110, 120, "GAME OVER! PRESS ANY KEY TO CONTINUE");
+            outtextxy(100, 120, "GAME OVER! PRESS SPACE KEY TO RESTART");
+            outtextxy(100, 160, "PRESS ESC TO EXIT!");
 
             char msg[100];
             sprintf(msg, "YOUR SCORE WAS %ld", score);
-            outtextxy(110, 160, msg);
+            outtextxy(100, 200, msg);
+
+            if (GetAsyncKeyState(VK_SPACE))
+            {
+                reposition(&enemySlow, &enemyNormal, &enemyFast, &Car_x, &score_val);
+                restart(&lives, &score, &score_val);
+                goto out;
+            }
+            if (GetAsyncKeyState(VK_ESCAPE))
+                return 0;
 
             getch();
-            delay(3000);
         }
 
-        score += 5;
+        out:
+        score += score_val;
         page = 1-page;
         delay(30);
     }
@@ -199,6 +220,21 @@ int main()
 
     getch();
     return 0;
+}
+
+void restart(int* lives, long* score, int* score_val)
+{
+    *lives = 3;
+    *score = 0;
+    *score_val = 5;
+}
+
+void reposition(int *es, int *en, int *ef, int *c_x, int *s_val)
+{
+    *es = 0;
+    *en = 0;
+    *ef = 0;
+    *c_x = 0;
 }
 
 void enemyCar(int x, int y, int moveFactor, colors body, colors head)
