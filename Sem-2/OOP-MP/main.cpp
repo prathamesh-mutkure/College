@@ -17,8 +17,6 @@
  *********************************************************/
 
 #include <iostream>
-#include <string.h>
-#include <stdbool.h>
 #include <fstream>
 #include <iomanip>
 
@@ -52,7 +50,6 @@ public:
     void display_basic_info();
 
     int getAccNum() { return acc_num; }
-
 };
 
 void Account::create_account()
@@ -74,8 +71,6 @@ void Account::create_account()
     cout << "Enter your PAN Number: ";
     cin >> PAN_num;
 }
-
-
 
 void Account::deposit()
 {
@@ -105,8 +100,8 @@ void Account::display_acc()
     cout << "\nHolder's Name : " << name << endl;
     cout << "Account Number : " << acc_num << endl;
     cout << "Account Balance : " << balance << endl;
-    cout << "Aadhar Number : " << balance << endl;
-    cout << "PAN Number : " << balance << endl;
+    cout << "Aadhar Number : " << aadhar_num << endl;
+    cout << "PAN Number : " << PAN_num << endl;
 }
 
 void Account::modify_acc()
@@ -157,9 +152,26 @@ int main()
     cout << "\t\tMicro-Project for OOP - CO3I" << endl << endl;
 
     bool exit = false;
+    char ask;
     int choice;
 
     do {
+
+        ask_continue:
+        cout << "\nDo you want to continue[Y/n]: ";
+        cin >> ask;
+
+        switch (ask)
+        {
+            case 'y':
+            case 'Y':
+                break;
+            case 'n':
+            case 'N':
+                goto out;
+            default:
+                goto ask_continue;
+        }
 
         display_options();
         cout << "\nEnter your Choice: ";
@@ -198,6 +210,11 @@ int main()
 
     } while (!exit);
 
+    out:
+    cout << "\n\nThank you for using our Application!\n\n";
+    cout << "OOP Micro-Project by Vinit Akhar(6), Prathamesh Mutkure(24) and Samyak Sukhdeve(27)\n"
+         << "CO3I\t" << "2019-20" << endl << endl;
+
     return 0;
 }
 
@@ -206,11 +223,13 @@ void write_account()
     Account ac;
     ac.create_account();
 
-    ofstream writeFile;
-    writeFile.open("account.dat", ios::binary|ios::app);
+    ofstream file;
+    file.open("account.dat", ios::binary | ios::app);
 
-    writeFile.write((char*) &ac, sizeof(Account));
-    writeFile.close();
+    file.write((char*) &ac, sizeof(Account));
+    file.close();
+
+    cout << "\nAccount " << ac.getAccNum() << " created!" << endl;
 }
 
 void withdraw_deposit_money(int choice)
@@ -222,15 +241,15 @@ void withdraw_deposit_money(int choice)
     cout << "\nEnter Account Number: ";
     cin >> accNo;
 
-    fstream File;
-    File.open("account.dat", ios::binary|ios::in|ios::out);
-    if (!File)
+    fstream file;
+    file.open("account.dat", ios::binary | ios::in | ios::out);
+    if (!file)
     {
         cout << FILE_ERROR;
         return;
     }
 
-    while (File.read((char*) &ac, sizeof(Account)) && !found)
+    while (file.read((char*) &ac, sizeof(Account)) && !found)
     {
         if (ac.getAccNum() == accNo)
         {
@@ -240,15 +259,15 @@ void withdraw_deposit_money(int choice)
                 ac.deposit();
 
             found = true;
-            cout << "\nRecord Updates!!" << endl;
+            cout << "\nRecord Updated!!" << endl;
 
             int pos = (-1) * (int)sizeof(Account);
-            File.seekp(pos, ios::cur);
-            File.write((char*) &ac, sizeof(Account));
+            file.seekp(pos, ios::cur);
+            file.write((char*) &ac, sizeof(Account));
         }
     }
 
-    File.close();
+    file.close();
 
     if(!found)
         cout << RECORD_ERROR;
@@ -263,15 +282,15 @@ void edit_account()
     cout << "\nEnter Account Number to be modified: ";
     cin >> accNo;
 
-    fstream File;
-    File.open("account.dat", ios::binary|ios::in|ios::out);
-    if (!File)
+    fstream file;
+    file.open("account.dat", ios::binary | ios::in | ios::out);
+    if (!file)
     {
         cout << FILE_ERROR;
         return;
     }
 
-    while (File.read((char*) &ac, sizeof(Account)) && !found)
+    while (file.read((char*) &ac, sizeof(Account)) && !found)
     {
         if (accNo == ac.getAccNum())
         {
@@ -279,15 +298,15 @@ void edit_account()
             ac.modify_acc();
 
             int pos = (-1)* (int) sizeof(Account);
-            File.seekp(pos, ios::cur);
-            File.write((char*) &ac, sizeof(Account));
+            file.seekp(pos, ios::cur);
+            file.write((char*) &ac, sizeof(Account));
 
             cout << "\nRecord Updated!!" << endl;
             found = true;
         }
     }
 
-    File.close();
+    file.close();
 
     if (!found)
         cout << RECORD_ERROR;
@@ -345,23 +364,23 @@ void display_account()
     cout << "\nEnter Account Number: ";
     cin >> accNo;
 
-    ifstream File;
-    File.open("account.dat", ios::binary);
+    ifstream file;
+    file.open("account.dat", ios::binary);
 
-    if (!File)
+    if (!file)
     {
         cout << FILE_ERROR;
         return;
     }
 
-    while (File.read((char*) &ac, sizeof(Account)))
+    while (file.read((char*) &ac, sizeof(Account)))
         if (ac.getAccNum() == accNo)
         {
             ac.display_acc();
             acc_found = true;
         }
 
-    File.close();
+    file.close();
 
     if (!acc_found)
         cout << "\nAccount number " << accNo << " doesn't exist!" << endl;
@@ -372,10 +391,10 @@ void display_all_accounts()
 {
 
     Account ac;
-    ifstream File;
+    ifstream file;
 
-    File.open("account.dat", ios::binary);
-    if (!File)
+    file.open("account.dat", ios::binary);
+    if (!file)
     {
         cout << FILE_ERROR;
         return;
@@ -386,12 +405,12 @@ void display_all_accounts()
     cout << "A/C No          NAME          BALANCE\n";
     cout << "====================================================\n\n";
 
-    while (File.read((char*) &ac, sizeof(Account)))
+    while (file.read((char*) &ac, sizeof(Account)))
     {
         ac.display_basic_info();
     }
 
-    File.close();
+    file.close();
 }
 
 void display_options()
