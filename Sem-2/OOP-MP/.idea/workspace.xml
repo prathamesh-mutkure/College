@@ -11,7 +11,10 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1a7dbdf6-98de-4929-9dae-2cf3a8ea48fb" name="Default Changelist" comment="" />
+    <list default="true" id="1a7dbdf6-98de-4929-9dae-2cf3a8ea48fb" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/account.dat" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/account.dat" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,23 +40,8 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="683" />
-    <option name="y" value="27" />
-    <option name="width" value="683" />
-    <option name="height" value="741" />
-  </component>
   <component name="ProjectId" id="1RL9eBV4UNE1fRG37bojEH7MFGB" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
-  <component name="ProjectView">
-    <navigator proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="ProjectPane" />
-      <pane id="Scope" />
-    </panes>
-  </component>
   <component name="PropertiesComponent">
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
@@ -89,7 +77,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1569435602571</updated>
-      <workItem from="1569435609444" duration="1822000" />
+      <workItem from="1569435609444" duration="1947000" />
+      <workItem from="1569470380398" duration="258000" />
     </task>
     <servers />
   </component>
@@ -101,7 +90,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
