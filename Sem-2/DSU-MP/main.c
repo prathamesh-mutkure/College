@@ -1,87 +1,166 @@
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
-#include <stdbool.h>
 
+// Stack type return -1;
 struct Stack
 {
     int top;
-    size_t size;
-    int *a;
+    unsigned size;
+    int* array;
 };
 
 typedef struct Stack Stack;
 
-void initialize_stack(Stack *stack, size_t size);
-bool isEmpty(Stack* stack);
-bool isFull(Stack* stack);
-int push(Stack* stack, int n);
-int pop(Stack* stack);
+// Stack Operations 
+Stack* createStack( unsigned capacity )
+{
+    Stack* stack = (Stack*) malloc(sizeof(Stack));
+
+    if (!stack)
+        return NULL;
+
+    stack->top = -1;
+    stack->size = capacity;
+
+    stack->array = (int*) malloc(stack->size * sizeof(int));
+
+    if (!stack->array)
+        return NULL;
+    return stack;
+}
+
+int isEmpty(Stack* stack)
+{
+    return stack->top == -1;
+}
+
+char peek(Stack* stack)
+{
+    return stack->array[stack->top];
+}
+
+char pop(Stack* stack)
+{
+    if (!isEmpty(stack))
+        return stack->array[stack->top--] ;
+    return '$';
+}
+void push(Stack* stack, char op)
+{
+    stack->array[++stack->top] = op;
+}
+
+// A utility function to check if the given character is operand 
+int isOperand(char ch)
+{
+    return (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z');
+}
+
+// A utility function to return precedence of a given operator 
+// Higher returned value means higher precedence 
+int precedence(char ch)
+{
+    switch (ch)
+    {
+        case '+':
+        case '-':
+            return 1;
+
+        case '*':
+        case '/':
+            return 2;
+
+        case '^':
+            return 3;
+    }
+    return -1;
+}
+
+void infixToPostfix(char* exp)
+{
+    int i, k;
+
+    // Create a stack of size equal to expression size
+    Stack* stack = createStack(strlen(exp));
+    if(!stack) // See if stack was created successfully
+        printf("\nError creating Stack!");
+
+    for (i = 0, k = -1; exp[i]; ++i)
+    {
+        // If the scanned character is an operand, add it to output.
+        if (isOperand(exp[i]))
+            exp[++k] = exp[i];
+
+            // If the scanned character is an ‘(‘, push it to the stack.
+        else if (exp[i] == '(')
+            push(stack, exp[i]);
+
+            // If the scanned character is an ‘)’, pop and output from the stack
+            // until an ‘(‘ return -1;is encountered.
+        else if (exp[i] == ')')
+        {
+            while (!isEmpty(stack) && peek(stack) != '(')
+                exp[++k] = pop(stack);
+            if (!isEmpty(stack) && peek(stack) != '(')
+                fputs("\nInvalid Expression!", stdin); // invalid expression
+            else
+                pop(stack);
+        }
+        else // an operator is encountered
+        {
+            while (!isEmpty(stack) && precedence(exp[i]) <= precedence(peek(stack)))
+                exp[++k] = pop(stack);
+            push(stack, exp[i]);
+        }
+
+    }
+
+    // pop all the operators from the stack
+    while (!isEmpty(stack))
+        exp[++k] = pop(stack );
+
+    exp[++k] = '\0';
+    printf( "Postfix = %s", exp );
+}
 
 int main()
 {
 
-    Stack s1;
-    initialize_stack(&s1, 3);
+    char* exp;
+    char choice, x;
 
-    push(&s1, 10);
-    push(&s1, 20);
-    push(&s1, 30);
+    ask:
+    printf("\nDo you want to continue[Y/n]: ");
+    scanf("%c", &choice);
+    scanf("%c", &x);
 
-    pop(&s1);
-    pop(&s1);
-    pop(&s1);
+    switch (choice)
+    {
+        case 'y':
+        case 'Y':
+            break;
+        case 'n':
+        case 'N':
+            goto end;
+        default:
+            goto ask;
+    }
+
+    exp = malloc(100 * sizeof(char));
+
+    printf("\nEnter Infix String: ");
+    fgets(exp, 90, stdin);
+
+    printf("\nInfix = %s", exp);
+    infixToPostfix(exp);
+
+    free(exp);
+
+    goto ask;
+
+    end:
+        printf("\n\n******Thank You for using our Program*****\n\n");
 
     return 0;
 }
-
-void initialize_stack(Stack* stack, size_t size)
-{
-    stack->size = size;
-    stack->a = malloc(size * sizeof(int));
-    stack->top = -1;
-
-    printf("\nStack Initialized with top=%d and size=%d", stack->top, (int)stack->size);
-}
-
-bool isEmpty(Stack* stack)
-{
-    return (stack->top == -1);
-}
-
-bool isFull(Stack* stack)
-{
-    return (stack->top == stack->size -1);
-}
-
-int push(Stack* stack, int n)
-{
-    if (isFull(stack))
-    {
-        printf("\n\nFAILED!! STACK OVERFLOW ERROR");
-        exit(-1);
-    }
-
-    ++(stack->top);
-    stack->a[stack->top] = n;
-
-    printf("\nPushed: %d, Top=%d", n, stack->top);
-    return 1;
-}
-
-int pop(Stack* stack)
-{
-    if (isEmpty(stack))
-    {
-        printf("\n\nFAILED!! STACK UNDERFLOW ERROR");
-        exit(-1);
-    }
-
-    printf("\nPopped %d,", stack->a[stack->top]);
-
-    *((stack->a) + stack->top) = 0;
-    --(stack->top);
-
-    printf(" Top=%d", stack->top);
-    return 1;
-}
-
